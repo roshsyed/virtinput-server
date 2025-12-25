@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package vdevice.v1;
+
+option go_package = "github.com/roshsyed/virtinput-server/api/vdevice/v1;vdevicev1";
+
+import "google/protobuf/empty.proto";
+
+enum KeyAction {
+  KEY_ACTION_UNSPECIFIED = 0;
+  KEY_PRESS = 1;
+  KEY_DOWN = 2;
+  KEY_UP = 3;
+}
+
+enum MouseAction {
+  MOUSE_ACTION_UNSPECIFIED = 0;
+  MOUSE_MOVE_LEFT = 1;
+  MOUSE_MOVE_RIGHT = 2;
+  MOUSE_MOVE_UP = 3;
+  MOUSE_MOVE_DOWN = 4;
+  MOUSE_MOVE = 5;
+  MOUSE_LEFT_CLICK = 6;
+  MOUSE_RIGHT_CLICK = 7;
+  MOUSE_MIDDLE_CLICK = 8;
+  MOUSE_LEFT_PRESS = 9;
+  MOUSE_LEFT_RELEASE = 10;
+  MOUSE_RIGHT_PRESS = 11;
+  MOUSE_RIGHT_RELEASE = 12;
+  MOUSE_MIDDLE_PRESS = 13;
+  MOUSE_MIDDLE_RELEASE = 14;
+  MOUSE_WHEEL = 15;
+}
+
+message KeyEvent {
+  KeyAction action = 1;
+  uint32 key_code = 2;
+}
+
+service KeyboardService {
+  rpc SendKey(KeyEvent) returns (google.protobuf.Empty);
+}
+
+message MouseEvent {
+  MouseAction action = 1;
+  int32 pixel = 2;
+  int32 x = 3;
+  int32 y = 4;
+  bool horizontal = 5;
+  int32 delta = 6;
+}
+
+service MouseService {
+  rpc UseMouse(MouseEvent) returns (google.protobuf.Empty);
+}
