@@ -5,29 +5,29 @@ It allows remote clients to send input events (keyboard, mouse movement, buttons
 
 *API is experimental and may change*
 
-# Requirements
+## Requirements
 - Linux with uinput support
 - Permission to create uinput devices (root or udev rule)
 
-# Config
+## Config
 Default configs live in:
 ```
 config/config.go
 ```
 
-# Build
+## Build
 ```
 make generate
-go build ./cmd/virtinput-server
+go build -o ./bin/virtinput-server ./cmd/virtinput-server 
 ```
 
-# Run
+## Run
 ```
-sudo ./virtinput-server
+sudo ./bin/virtinput-server
 ```
 Listens on :50051 by default.
 
-# API
+## API
 Protobuf definitions live in:
 ```
 proto/vdevice/v1/vdevice.proto
@@ -39,12 +39,14 @@ Services:
 
 Server reflection is enabled.
 
-# Example
+For a full list of valid key codes for the keyboard service, look at the [uinput package](https://github.com/bendahl/uinput/blob/master/keycodes.go).
+
+## Example
 ```
 grpcurl -plaintext \
   -d '{"keyCode":30,"action":"KEY_PRESS"}' \
   localhost:50051 vdevice.v1.KeyboardService/SendKey
 ```
 
-# License
+## License
 MIT
